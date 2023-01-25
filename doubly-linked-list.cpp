@@ -2,6 +2,7 @@
 using namespace std;
 int main()
 {
-    int 3;
+    int x = 3;
+
     return 0;
 }
