@@ -62,17 +62,18 @@ public:
     }
     void InsertAt(int index, int value)
     {
-        if (index == 0)
+        if (index < 0 || index > size)
         {
-            InsertAtHead(value);
+            cout << "Index not Available" << endl;
         }
         else if (index == size)
         {
             InsertAtLast(value);
         }
-        else if (index < 0 || index > size)
+
+        else if (index == 0)
         {
-            cout << "Index not Available" << endl;
+            InsertAtHead(value);
         }
         else
         {
@@ -92,6 +93,81 @@ public:
             previousNode->next = newNode;
         }
     }
+    void DeleteAtHead()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty";
+        }
+        else if (head->next == NULL)
+        {
+            head = NULL;
+            size--;
+        }
+        else
+        {
+            node *current = head;
+            node *newHead = head->next;
+            newHead->previous = NULL;
+            head = newHead;
+            size--;
+            delete current;
+        }
+    }
+    void DeleteAtLast()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty";
+        }
+        else if (head->next == NULL)
+        {
+            head = NULL;
+            size--;
+        }
+        else
+        {
+            node *newLast = head;
+            while (newLast->next->next != NULL)
+            {
+                newLast = newLast->next;
+            }
+            node *will_delete = newLast->next;
+            newLast->next = NULL;
+            size--;
+            delete will_delete;
+        }
+    }
+    void DeleteAt(int index)
+    {
+        if (index < 0 || index >= size)
+        {
+            cout << "Index not Available" << endl;
+        }
+        else if (index == size - 1)
+        {
+            DeleteAtLast();
+        }
+
+        else if (index == 0)
+        {
+            DeleteAtHead();
+        }
+        else
+        {
+            node *current = head;
+            int countIndex = 0;
+            while (index != countIndex)
+            {
+                current = current->next;
+                countIndex++;
+            }
+            size--;
+            current->previous->next = current->next;
+            current->next->previous = current->previous;
+            delete current;
+        }
+    }
     void TraverseList()
     {
         node *current = head;
@@ -101,16 +177,20 @@ public:
             current = current->next;
         }
     }
+    int Size()
+    {
+        return size;
+    }
 };
 int main()
 {
     DoublyLinkedList list;
     list.InsertAtLast(5230);
-    list.InsertAtLast(2230);
-    list.InsertAtLast(520);
-    list.InsertAtLast(523);
-    list.InsertAt(1, 20);
-    list.InsertAt(1, 200);
+    list.InsertAtLast(5300);
+    list.InsertAtLast(530);
+    list.InsertAtLast(5);
+    list.InsertAt(3, 2);
+    list.DeleteAt(3);
     list.TraverseList();
     return 0;
 }
