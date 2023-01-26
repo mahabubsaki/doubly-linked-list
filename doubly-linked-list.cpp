@@ -168,6 +168,28 @@ public:
             delete current;
         }
     }
+    void ReverseList()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty";
+            return;
+        }
+        node *lastPointer = head;
+        int countIndex = 0;
+        while (countIndex != size - 1)
+        {
+            lastPointer = lastPointer->next;
+            countIndex++;
+        }
+        node *current = head;
+        while (current != NULL)
+        {
+            swap(current->next, current->previous);
+            current = current->previous;
+        }
+        head = lastPointer;
+    }
     void TraverseList()
     {
         node *current = head;
@@ -188,9 +210,8 @@ int main()
     list.InsertAtLast(5230);
     list.InsertAtLast(5300);
     list.InsertAtLast(530);
-    list.InsertAtLast(5);
-    list.InsertAt(3, 2);
-    list.DeleteAt(3);
+    list.InsertAtLast(530312);
+    list.ReverseList();
     list.TraverseList();
     return 0;
 }
